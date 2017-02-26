@@ -13,13 +13,32 @@ nav {
 }
 
 ul {
-  height: inherit:auto;
+  height: 30px;
   width: 300px;
   background-color: yellow;
-  margin-right: 100px; 
+  margin-right: 100px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   list-style-type: none;
   padding: 0;
+}
+
+.options {
+  height: 600px;
+  width: 10%;
+  background-color: red;
+  top: 150px;
+  left: 80px;
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.options section {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
 }
