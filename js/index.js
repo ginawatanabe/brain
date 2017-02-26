@@ -10,39 +10,38 @@ window.onload = function() {
   let mouse = new THREE.Vector2();
 
   function init() {
-      scene = new THREE.Scene();
+    scene = new THREE.Scene();
 
-      // initCube();
-      initCamera();
-      initRenderer();
-      initMesh();
+    initCamera();
+    initRenderer();
+    initMesh();
+    initLight();
 
-      document.body.appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement);
   }
 
   function initCamera() {
-      camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 10);
-      camera.position.set(0, 3.5, 5);
-      camera.lookAt(scene.position);
+    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 10);
+    camera.position.set(0, 3.5, 5);
+    camera.lookAt(scene.position);
   }
 
   function initRenderer() {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(WIDTH, HEIGHT);
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(WIDTH, HEIGHT);
   }
 
-  // function initCube() {
-  //     cube = new THREE.Mesh(new THREE.CubeGeometry(2, 2, 2), new THREE.MeshNormalMaterial());
-  //     scene.add(cube);
-  // }
+  function initLight() {
+    let light = new THREE.PointLight(0xffffff);
+    scene.add(light);
+  }
 
   let mesh = null;
 
   function initMesh() {
     let loader = new THREE.JSONLoader();
     for (let i = 0; i<5; i++) {
-      debugger
-      loader.load('../public/marmelab.json', function(geometry, materials) {
+      loader.load('models/purpleblocksculpt.json', function(geometry, materials) {
         mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         // mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.75;
         mesh.translation = THREE.GeometryUtils.center(geometry);
@@ -70,12 +69,6 @@ window.onload = function() {
       scene.children[i].rotation.z -= SPEED*3;
     }
   }
-  //
-  // function rotateCube() {
-  //     cube.rotation.x -= SPEED * 0.2;
-  //     cube.rotation.y -= SPEED;
-  //     cube.rotation.z -= SPEED * 0.3;
-  // }
 
   function onMouseMove(event) {
     mouse.x = (event.clientX/window.innerWidth)*2 - 1;
