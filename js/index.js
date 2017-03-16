@@ -96,26 +96,16 @@ window.onload = function() {
     raycaster.setFromCamera(mouse, camera);
     // Calculate objects intersecting the picking ray
     let intersects = raycaster.intersectObjects(scene.children);
-    // let currentColor;
-    // currentColor = scene.children[0].color.getRGB();
 
     if (intersects.length) {
         console.log("hello");
-        // console.log(mouse);
-
         intersects[0].object.material.materials[0].emissive.setRGB(0.2,0,0.5);
     } else {
-      console.log("noo");
-      // console.log(scene.children[0].material.materials[0].emissive.setRGB(0,0,0));
-      scene.children[1].material.materials[0].emissive.setRGB(0,0,0);
-      scene.children[2].material.materials[0].emissive.setRGB(0,0,0);
-
+      //Highlight.
+      for (i=1; i<scene.children.length; i++) {
+        scene.children[i].material.materials[0].emissive.setRGB(0,0,0);
+      }
     }
-
-    // if (intersects.length == 0)
-      // console.log("YO");
-      // console.log(scene.children[0]);
-      // scene.children[0].material.color = 1.2;
   }
 
   function render() {
