@@ -17,13 +17,16 @@ window.onload = function() {
     initRenderer();
     initMesh();
     initLight();
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    // controls = new THREE.OrbitControls(camera, renderer.domElement);
+    // cameraControls = new THREE.OrbitControls( camera, renderer.domElement );
+    // cameraControls.target.set( 0, 0, 0 );
+    // cameraControls.addEventListener( 'change', render );
+    controls = new THREE.TrackballControls(camera);
     controls.rotateSpeed= 0.3;
     controls.zoomSpeed = 1.2;
     controls.panSpeed = 0.8;
     controls.staticMoving = true;
     controls.dynamicDampingFactor = 0.3;
-    // controls = new THREE.TrackballControls(camera);
     controls.addEventListener('change', render);
     document.body.appendChild(renderer.domElement);
 
@@ -72,17 +75,17 @@ window.onload = function() {
     }
   }
 
-  function rotateMesh() {
-    if (!mesh) {
-      return;
-    }
-
-    for(let i = 0; i<scene.children.length; i++) {
-      scene.children[i].rotation.x -= SPEED*2;
-      scene.children[i].rotation.y -= SPEED;
-      scene.children[i].rotation.z -= SPEED*3;
-    }
-  }
+  // function rotateMesh() {
+  //   if (!mesh) {
+  //     return;
+  //   }
+  //
+  //   for(let i = 0; i<scene.children.length; i++) {
+  //     scene.children[i].rotation.x -= SPEED*2;
+  //     scene.children[i].rotation.y -= SPEED;
+  //     scene.children[i].rotation.z -= SPEED*3;
+  //   }
+  // }
 
   function onMouseMove(event) {
     mouse.x = (event.clientX/window.innerWidth)*2 - 1;
@@ -101,6 +104,12 @@ window.onload = function() {
         // console.log(mouse);
 
         intersects[0].object.material.materials[0].emissive.setRGB(0.2,0,0.5);
+    } else {
+      console.log("noo");
+      // console.log(scene.children[0].material.materials[0].emissive.setRGB(0,0,0));
+      scene.children[1].material.materials[0].emissive.setRGB(0,0,0);
+      scene.children[2].material.materials[0].emissive.setRGB(0,0,0);
+
     }
 
     // if (intersects.length == 0)
