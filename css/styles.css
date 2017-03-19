@@ -68,7 +68,7 @@ ul {
   font-weight: bolder;
 }
 
-.information p {
+#details {
   height: auto;
   width: auto;
   /*background-color: pink;*/

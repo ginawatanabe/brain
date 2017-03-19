@@ -1,12 +1,16 @@
 
 window.onload = function() {
+  //XML Requests
+  // let xhttp = new XMLHttpRequest();
+  // xhttp.open("GET","https://en.wikipedia.org/wiki/Brain", false);
+  // xhttp.send();
+
   let title = document.getElementById('title');
+  let details = document.getElementById('details');
 
   let container, scene, camera, renderer, controls;
 
   let objects = [];
-
-  let clock = new THREE.Clock();
 
   let WIDTH  = window.innerWidth;
   let HEIGHT = window.innerHeight;
@@ -15,13 +19,6 @@ window.onload = function() {
 
   let raycaster = new THREE.Raycaster();
   let mouse = new THREE.Vector2(), INTERSECTED;
-
-  document.body.onclick = function() {
-    console.log(WIDTH);
-    console.log(HEIGHT);
-  }
-
-
 
   function init() {
     container = document.createElement('div');
@@ -34,6 +31,7 @@ window.onload = function() {
     initMesh();
     initLight();
 
+    //Initialize trackball controls.
     controls = new THREE.TrackballControls(camera);
     controls.rotateSpeed = 1.0;
     controls.zoomSpeed = 1.2;
@@ -46,7 +44,6 @@ window.onload = function() {
     container.appendChild(renderer.domElement);
 
     //Initiate drag controls.
-    // let dragControls = new THREE.DragControls(objects, camera, renderer.domElement );
     let dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
 	  dragControls.addEventListener( 'dragstart', function ( event ) { controls.enabled = false; } );
 		dragControls.addEventListener( 'dragend', function ( event ) { controls.enabled = true; } );
@@ -85,8 +82,6 @@ window.onload = function() {
     for (let i = 0; i< 2; i++) {
       loader.load('models/purpleblocksculpt.json', function(geometry, materials) {
         mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-        // mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.75;
-        // mesh.translation = THREE.GeometryUtils.center(geometry);
         mesh.position.x = Math.random() * 8 - 6;
         mesh.position.y = Math.random() * 8 - 6;
         mesh.position.z = Math.random() * 8 - 6;
@@ -113,13 +108,10 @@ window.onload = function() {
   //   }
   // }
 
-
-
   function onMouseMove(event) {
 
     mouse.x = (event.clientX/window.innerWidth)*2 - 1;
     mouse.y = -(event.clientY/window.innerHeight)*2 + 1;
-
 
     // Raycaster
     // Update the picking ray with the camera and mouse position.
@@ -127,17 +119,26 @@ window.onload = function() {
     // Calculate objects intersecting the picking ray
     let intersects = raycaster.intersectObjects(scene.children);
 
+    scene.children[1].name = "Amygdala";
+    scene.children[2].name = "Gland";
+
     if (intersects.length > 0) {
-      scene.children[1].name = "Amygdala";
-      scene.children[2].name = "Gland";
+
 
       if (intersects[0].object != INTERSECTED) {
         if (INTERSECTED)
           INTERSECTED.material.materials[0].emissive.setRGB(0,0,0);
 
         INTERSECTED = intersects[0].object;
+        console.log(intersects[0].object);
         console.log(intersects[0].object.name);
         title.innerHTML = intersects[0].object.name;
+        // details.innerHTML = intersects[0].object.d
+        if (intersects[0].object.name == "Amygdala") {
+          details.innerHTML = "Hello";
+        } else {
+          details.innerHTML = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        }
 
         INTERSECTED.material.materials[0].emissive.setRGB(0.2,0,0.5);
       }
