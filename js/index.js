@@ -15,6 +15,11 @@ window.onload = function() {
   let raycaster = new THREE.Raycaster();
   let mouse = new THREE.Vector2(), INTERSECTED;
 
+  document.body.onclick = function() {
+    console.log(WIDTH);
+    console.log(HEIGHT);
+  }
+
   function init() {
     container = document.createElement('div');
     document.body.appendChild(container);
@@ -37,27 +42,25 @@ window.onload = function() {
 
     container.appendChild(renderer.domElement);
 
-
     //Initiate drag controls.
-    let dragControls = new THREE.DragControls(scene.children, camera, renderer.domElement );
+    // let dragControls = new THREE.DragControls(objects, camera, renderer.domElement );
+    let dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
 	  dragControls.addEventListener( 'dragstart', function ( event ) { controls.enabled = false; } );
 		dragControls.addEventListener( 'dragend', function ( event ) { controls.enabled = true; } );
 
   }
 
   function onResize() {
-    let WIDTH = window.innerWidth;
-    let HEIGHT = window.innerHeight;
-    renderer.setSize(WIDTH, HEIGHT);
-    camera.aspect = WIDTH/HEIGHT;
+    camera.aspect = window.innerWidth/window.innerHeight;
     camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   function initCamera() {
-    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 1000);
-    camera.position.set(0, 3.5, 5);
-    camera.position.z = 100; 
-    camera.lookAt(scene.position);
+    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 100);
+    // camera.position.set(0, 3.5, 5);
+    camera.position.z = 10;
+    // camera.lookAt(scene.position);
   }
 
   function initRenderer() {
@@ -76,11 +79,11 @@ window.onload = function() {
 
   function initMesh() {
     let loader = new THREE.JSONLoader();
-    for (let i = 0; i< 2; i++) {
-      loader.load('models/purpleblocksculpt.json', function(geometry, materials) {
+    for (let i = 0; i< 20; i++) {
+      loader.load('models/marmelab.json', function(geometry, materials) {
         mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         // mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.75;
-        mesh.translation = THREE.GeometryUtils.center(geometry);
+        // mesh.translation = THREE.GeometryUtils.center(geometry);
         mesh.position.x = Math.random() * 8 - 6;
         mesh.position.y = Math.random() * 8 - 6;
         mesh.position.z = Math.random() * 8 - 6;
@@ -121,12 +124,14 @@ window.onload = function() {
     let intersects = raycaster.intersectObjects(scene.children);
 
     if (intersects.length > 0) {
-      for (i = 0; i<intersects.length;i++) {
-        intersects[i].object.material.materials[0].emissive.setRGB(0.2,0,0.5);
-      }
-    } else {
-      for (i=1; i<scene.children.length; i++) {
-        scene.children[i].material.materials[0].emissive.setRGB(0,0,0);
+      console.log(INTERSECTED);
+      if (intersects[0].object != INTERSECTED) {
+        if (INTERSECTED)
+          INTERSECTED.material.materials[0].emissive.setRGB(0,0,0);
+
+        INTERSECTED = intersects[0].object;
+
+        INTERSECTED.material.materials[0].emissive.setRGB(0.2,0,0.5);
       }
     }
   }
