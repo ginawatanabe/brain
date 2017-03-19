@@ -1,6 +1,7 @@
 html, body, p, ul, h1, h2, h3, h4, h5 {
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 nav {
@@ -47,7 +48,30 @@ ul {
   height: 100px;
   width: 200px;
   background-color: pink;
-  display: fixed;
-  left: 200px;
-  top: 200px;
+  position: absolute;
+}
+
+.information {
+  height: 400px;
+  width: 400px;
+  /*background-color: blue;*/
+  position: absolute;
+  right: 10%;
+  top: 20%;
+}
+
+.information h1 {
+  height: auto;
+  width: auto;
+  /*background-color: yellow;*/
+  font-size: 50px;
+  font-weight: bolder;
+}
+
+.information p {
+  height: auto;
+  width: auto;
+  /*background-color: pink;*/
+  font-size: 20px;
+  margin-top: 20px;
 }

@@ -1,5 +1,6 @@
 
 window.onload = function() {
+  let title = document.getElementById('title');
 
   let container, scene, camera, renderer, controls;
 
@@ -19,6 +20,8 @@ window.onload = function() {
     console.log(WIDTH);
     console.log(HEIGHT);
   }
+
+
 
   function init() {
     container = document.createElement('div');
@@ -79,8 +82,8 @@ window.onload = function() {
 
   function initMesh() {
     let loader = new THREE.JSONLoader();
-    for (let i = 0; i< 20; i++) {
-      loader.load('models/marmelab.json', function(geometry, materials) {
+    for (let i = 0; i< 2; i++) {
+      loader.load('models/purpleblocksculpt.json', function(geometry, materials) {
         mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         // mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.75;
         // mesh.translation = THREE.GeometryUtils.center(geometry);
@@ -111,6 +114,7 @@ window.onload = function() {
   // }
 
 
+
   function onMouseMove(event) {
 
     mouse.x = (event.clientX/window.innerWidth)*2 - 1;
@@ -124,12 +128,16 @@ window.onload = function() {
     let intersects = raycaster.intersectObjects(scene.children);
 
     if (intersects.length > 0) {
-      console.log(INTERSECTED);
+      scene.children[1].name = "Amygdala";
+      scene.children[2].name = "Gland";
+
       if (intersects[0].object != INTERSECTED) {
         if (INTERSECTED)
           INTERSECTED.material.materials[0].emissive.setRGB(0,0,0);
 
         INTERSECTED = intersects[0].object;
+        console.log(intersects[0].object.name);
+        title.innerHTML = intersects[0].object.name;
 
         INTERSECTED.material.materials[0].emissive.setRGB(0.2,0,0.5);
       }
