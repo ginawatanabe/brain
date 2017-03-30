@@ -1,12 +1,9 @@
 
 window.onload = function() {
-  //XML Requests
-  // let xhttp = new XMLHttpRequest();
-  // xhttp.open("GET","https://en.wikipedia.org/wiki/Brain", false);
-  // xhttp.send();
-
-  let title = document.getElementById('title');
-  let details = document.getElementById('details');
+  let name = document.getElementById('name');
+  let description = document.getElementById('description');
+  let detail = document.getElementById('detail');
+  let source = document.getElementById('source');
 
   let container, scene, camera, renderer, controls;
 
@@ -79,8 +76,8 @@ window.onload = function() {
 
   function initMesh() {
     let loader = new THREE.JSONLoader();
-    for (let i = 0; i< 2; i++) {
-      loader.load('models/purpleblocksculpt.json', function(geometry, materials) {
+    for (let i = 0; i< parts.length; i++) {
+      loader.load('models/pinkbrain.json', function(geometry, materials) {
         mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         mesh.position.x = Math.random() * 8 - 6;
         mesh.position.y = Math.random() * 8 - 6;
@@ -119,28 +116,32 @@ window.onload = function() {
     // Calculate objects intersecting the picking ray
     let intersects = raycaster.intersectObjects(scene.children);
 
-    scene.children[1].name = "Amygdala";
-    scene.children[2].name = "Gland";
+    console.log(amygdala.name);
+
+    //Placeholder name assignments.
+    for (i = 0; i<parts.length; i++) {
+      scene.children[i].name = parts[i].name;
+    }
 
     if (intersects.length > 0) {
-
 
       if (intersects[0].object != INTERSECTED) {
         if (INTERSECTED)
           INTERSECTED.material.materials[0].emissive.setRGB(0,0,0);
 
         INTERSECTED = intersects[0].object;
-        console.log(intersects[0].object);
-        console.log(intersects[0].object.name);
-        title.innerHTML = intersects[0].object.name;
-        // details.innerHTML = intersects[0].object.d
-        if (intersects[0].object.name == "Amygdala") {
-          details.innerHTML = "Hello";
-        } else {
-          details.innerHTML = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+        name.innerHTML = intersects[0].object.name;
+
+        for (i = 0; i<parts.length; i++) {
+          if (parts[i].name === name.innerHTML) {
+            description.innerHTML = parts[i].description;
+            detail.innerHTML = parts[i].detail;
+            source.innerHTML = parts[i].source;
+          }
         }
 
-        INTERSECTED.material.materials[0].emissive.setRGB(0.2,0,0.5);
+        INTERSECTED.material.materials[0].emissive.setRGB(0.1,0.1,0.1);
       }
     }
   }
