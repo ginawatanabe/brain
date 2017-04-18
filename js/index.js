@@ -40,10 +40,9 @@ window.onload = function() {
 
     container.appendChild(renderer.domElement);
 
-    //Initiate drag controls.
     let dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
-	  dragControls.addEventListener( 'dragstart', function ( event ) { controls.enabled = false; } );
-		dragControls.addEventListener( 'dragend', function ( event ) { controls.enabled = true; } );
+    dragControls.addEventListener( 'dragstart', function ( event ) { controls.enabled = false; } );
+    dragControls.addEventListener( 'dragend', function ( event ) { controls.enabled = true; } );
 
   }
 
@@ -55,9 +54,9 @@ window.onload = function() {
 
   function initCamera() {
     camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 100);
-    // camera.position.set(0, 3.5, 5);
+    camera.position.set(0, 3.5, 5);
     camera.position.z = 10;
-    // camera.lookAt(scene.position);
+    camera.lookAt(scene.position);
   }
 
   function initRenderer() {
@@ -69,28 +68,43 @@ window.onload = function() {
 
   function initLight() {
     let light = new THREE.PointLight(0xffffff);
+    light.position.set(50,50,50);
     scene.add(light);
+    console.log(scene.children);
   }
 
   let mesh = null;
 
   function initMesh() {
     let loader = new THREE.JSONLoader();
-    for (let i = 0; i< parts.length; i++) {
-      loader.load('models/pinkbrain.json', function(geometry, materials) {
-        mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-        mesh.position.x = Math.random() * 8 - 6;
-        mesh.position.y = Math.random() * 8 - 6;
-        mesh.position.z = Math.random() * 8 - 6;
+    loader.load('models/left1.json', function(geometry, materials) {
+      mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+      mesh.position.x = -2;
+      mesh.position.y = -2;
+      mesh.position.z = -10;
+      //
+      // mesh.rotation.x = Math.random()*2*Math.PI;
+      // mesh.rotation.y = Math.random()*2*Math.PI;
+      // mesh.rotation.z = Math.random()*2*Math.PI;
 
-        mesh.rotation.x = Math.random()*2*Math.PI;
-        mesh.rotation.y = Math.random()*2*Math.PI;
-        mesh.rotation.z = Math.random()*2*Math.PI;
+      scene.add(mesh);
+      objects.push(mesh);
+    })
+    loader.load('models/right1.json', function(geometry, materials) {
+      mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+      mesh.position.x = -2;
+      mesh.position.y = -2;
+      mesh.position.z = -10;
 
-        scene.add(mesh);
-        objects.push(mesh);
-      })
-    }
+      //
+      // mesh.rotation.x = 2;
+      // mesh.rotation.y = -2;
+      // mesh.rotation.z = Math.random()*2*Math.PI;
+
+      scene.add(mesh);
+      objects.push(mesh);
+    })
+
   }
 
   // function rotateMesh() {
@@ -105,6 +119,9 @@ window.onload = function() {
   //   }
   // }
 
+
+
+
   function onMouseMove(event) {
 
     mouse.x = (event.clientX/window.innerWidth)*2 - 1;
@@ -116,14 +133,17 @@ window.onload = function() {
     // Calculate objects intersecting the picking ray
     let intersects = raycaster.intersectObjects(scene.children);
 
-    console.log(amygdala.name);
-
     //Placeholder name assignments.
-    for (i = 0; i<parts.length; i++) {
-      scene.children[i].name = parts[i].name;
-    }
+    // for (i = 0; i<parts.length; i++) {
+    //   scene.children[i].name = parts[i].name;
+    // }
+    // scene.children[1].name = parts[0].name;
+    // scene.children[2].name = parts[1].name;
+    // scene.children[3].name = parts[2].name;
 
     if (intersects.length > 0) {
+      //Initiate drag controls.
+
 
       if (intersects[0].object != INTERSECTED) {
         if (INTERSECTED)
@@ -132,6 +152,7 @@ window.onload = function() {
         INTERSECTED = intersects[0].object;
 
         name.innerHTML = intersects[0].object.name;
+        console.log(intersects[0].object.name);
 
         for (i = 0; i<parts.length; i++) {
           if (parts[i].name === name.innerHTML) {
@@ -149,6 +170,7 @@ window.onload = function() {
   function render() {
     renderer.render(scene,camera);
     controls.update();
+
 
     // rotateMesh();
   }
