@@ -9,6 +9,10 @@ window.onload = function() {
 
   let objects = [];
 
+  let memoryX = [];
+  let memoryY = [];
+  let dragMemory = [];
+
   let WIDTH  = window.innerWidth;
   let HEIGHT = window.innerHeight;
 
@@ -16,6 +20,8 @@ window.onload = function() {
 
   let raycaster = new THREE.Raycaster();
   let mouse = new THREE.Vector2(), INTERSECTED;
+
+  let isDragging = false;
 
   function init() {
     container = document.createElement('div');
@@ -29,20 +35,21 @@ window.onload = function() {
     initLight();
 
     //Initialize trackball controls.
-    controls = new THREE.TrackballControls(camera);
-    controls.rotateSpeed = 1.0;
-    controls.zoomSpeed = 1.2;
-    controls.panSpeed = 0.8;
-    controls.noZoom = false;
-    controls.noPan = false;
-    controls.staticMoving = true;
-    controls.dynamicDampingFactor = 0.3;
-
+    // controls = new THREE.TrackballControls(camera);
+    // controls.rotateSpeed = 1.0;
+    // controls.zoomSpeed = 1.2;
+    // controls.panSpeed = 0.8;
+    // controls.noZoom = false;
+    // controls.noPan = false;
+    // controls.staticMoving = true;
+    // controls.dynamicDampingFactor = 0.3;
+    // controls.maxPolarAngle = Math.Pi/2;
+    // //
     container.appendChild(renderer.domElement);
-
-    let dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
-    dragControls.addEventListener( 'dragstart', function ( event ) { controls.enabled = false; } );
-    dragControls.addEventListener( 'dragend', function ( event ) { controls.enabled = true; } );
+    // //
+    // let dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
+    // dragControls.addEventListener( 'dragstart', function ( event ) { controls.enabled = false; } );
+    // dragControls.addEventListener( 'dragend', function ( event ) { controls.enabled = true; } );
 
   }
 
@@ -53,7 +60,7 @@ window.onload = function() {
   }
 
   function initCamera() {
-    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 100);
+    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 500);
     camera.position.set(0, 3.5, 5);
     camera.position.z = 10;
     camera.lookAt(scene.position);
@@ -77,34 +84,21 @@ window.onload = function() {
 
   function initMesh() {
     let loader = new THREE.JSONLoader();
-    loader.load('models/left1.json', function(geometry, materials) {
-      mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-      mesh.position.x = -2;
-      mesh.position.y = -2;
-      mesh.position.z = -10;
-      //
-      // mesh.rotation.x = Math.random()*2*Math.PI;
-      // mesh.rotation.y = Math.random()*2*Math.PI;
-      // mesh.rotation.z = Math.random()*2*Math.PI;
-
-      scene.add(mesh);
-      objects.push(mesh);
-    })
-    loader.load('models/right1.json', function(geometry, materials) {
-      mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-      mesh.position.x = -2;
-      mesh.position.y = -2;
-      mesh.position.z = -10;
-
-      //
-      // mesh.rotation.x = 2;
-      // mesh.rotation.y = -2;
-      // mesh.rotation.z = Math.random()*2*Math.PI;
-
-      scene.add(mesh);
-      objects.push(mesh);
-    })
-
+    for (i=0; i<64; i++) {
+      let name = 'models/brain/part' + String(i) + '.json';
+      loader.load(name, function(geometry, materials) {
+        mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+        mesh.position.x = -50;
+        mesh.position.y = -50;
+        mesh.position.z = -120;
+        //
+        mesh.rotation.x = -0.5;
+        mesh.rotation.y = 2.8;
+        // mesh.rotation.z = Math.random()*2*Math.PI;
+        scene.add(mesh);
+        objects.push(mesh);
+      })
+    }
   }
 
   // function rotateMesh() {
@@ -119,7 +113,44 @@ window.onload = function() {
   //   }
   // }
 
+  function onMouseDown() {
+    isDragging = true;
+  }
 
+  function onMouseUp(event) {
+    isDragging = false;
+  }
+
+  acceleration = 0.08;
+  let speed;
+  // function spinMesh() {
+  //   speed = 0.4;
+  //   console.log(speed);
+  //
+  //   if (speed < 0) {
+  //     console.log('STOPPPPP');
+  //     console.log(speed);
+  //
+  //     speed = 0;
+  //   } else if (speed > 0) {
+  //     console.log('hello');
+  //     speed = speed - 0.01;
+  //     console.log(speed);
+  //
+  //   }
+  //   if (memory[0] > memory[1]) {
+  //     for(let i = 0; i<scene.children.length; i++) {
+  //       scene.children[i].rotation.y += SPEED*speed;
+  //     }
+  //   }
+  //   if (memory[0] < memory[1]) {
+  //     for(let i = 0; i<scene.children.length; i++) {
+  //       scene.children[i].rotation.y -= SPEED*speed;
+  //     }
+  //   }
+  //
+  //   return speed;
+  // }
 
 
   function onMouseMove(event) {
@@ -127,30 +158,62 @@ window.onload = function() {
     mouse.x = (event.clientX/window.innerWidth)*2 - 1;
     mouse.y = -(event.clientY/window.innerHeight)*2 + 1;
 
+    //Drag controls for object.
+    if (isDragging) {
+      memoryX.unshift(mouse.x);
+      if (memoryX.length > 1) {
+        memoryX.length = 2;
+      }
+
+      memoryY.unshift(mouse.y);
+      if (memoryY.length > 1) {
+        memoryY.length = 2;
+      }
+
+      // console.log("this is current: " + event.clientX + "this is initial: " + initial)
+      if (memoryX[0] > memoryX[1]) {
+        for (i = 0; i<scene.children.length; i++) {
+          scene.children[i].rotation.y += acceleration;
+        }
+      }
+
+      if (memoryX[0] < memoryX[1]) {
+        for (i=0; i<scene.children.length; i++) {
+          scene.children[i].rotation.y -= acceleration;
+        }
+      }
+
+      if (memoryY[0] > memoryY[1]) {
+        for (i = 0; i<scene.children.length; i++) {
+          scene.children[i].rotation.x -= acceleration;
+        }
+      }
+
+      if (memoryY[0] < memoryY[1]) {
+        for (i=0; i<scene.children.length; i++) {
+          scene.children[i].rotation.x += acceleration;
+        }
+      }
+    }
+
     // Raycaster
     // Update the picking ray with the camera and mouse position.
     raycaster.setFromCamera(mouse, camera);
     // Calculate objects intersecting the picking ray
     let intersects = raycaster.intersectObjects(scene.children);
 
-    //Placeholder name assignments.
-    // for (i = 0; i<parts.length; i++) {
-    //   scene.children[i].name = parts[i].name;
-    // }
-    // scene.children[1].name = parts[0].name;
-    // scene.children[2].name = parts[1].name;
-    // scene.children[3].name = parts[2].name;
+    // Placeholder name assignments.
+    for (i = 0; i<parts.length; i++) {
+      scene.children[i].name = parts[i].name;
+    }
 
     if (intersects.length > 0) {
       //Initiate drag controls.
-
-
       if (intersects[0].object != INTERSECTED) {
         if (INTERSECTED)
           INTERSECTED.material.materials[0].emissive.setRGB(0,0,0);
 
         INTERSECTED = intersects[0].object;
-
         name.innerHTML = intersects[0].object.name;
         console.log(intersects[0].object.name);
 
@@ -169,10 +232,12 @@ window.onload = function() {
 
   function render() {
     renderer.render(scene,camera);
-    controls.update();
-
-
+    // controls.update();
     // rotateMesh();
+    // if (!isDragging) {
+    //   spinMesh();
+    // }
+
   }
 
   function animate() {
@@ -182,6 +247,10 @@ window.onload = function() {
   window.addEventListener('mousemove',onMouseMove,false);
   //Window resize event listener.
   window.addEventListener('resize',onResize,false);
+
+  window.addEventListener('mousedown', onMouseDown, false);
+
+  window.addEventListener('mouseup', onMouseUp, false);
 
 
   init();
