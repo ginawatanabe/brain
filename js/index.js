@@ -13,6 +13,8 @@ window.onload = function() {
   let memoryY = [];
   let dragMemory = [];
 
+  let acceleration = 0.08;
+
   let WIDTH  = window.innerWidth;
   let HEIGHT = window.innerHeight;
 
@@ -22,6 +24,16 @@ window.onload = function() {
   let mouse = new THREE.Vector2(), INTERSECTED;
 
   let isDragging = false;
+
+  let params = {
+    acceleration: 0.08
+  }
+
+  let gui = new dat.GUI();
+  gui.add(params, 'acceleration', 0, 0.15).step(0.01).onChange(function(value) {
+    acceleration = value;
+  });
+  gui.open();
 
   function init() {
     container = document.createElement('div');
@@ -121,8 +133,6 @@ window.onload = function() {
     isDragging = false;
   }
 
-  acceleration = 0.08;
-  let speed;
   // function spinMesh() {
   //   speed = 0.4;
   //   console.log(speed);
