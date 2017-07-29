@@ -102,8 +102,8 @@ window.onload = function() {
         mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         mesh.position.x = -50;
         mesh.position.y = -50;
-        mesh.position.z = -120;
-        //
+        // mesh.position.z = -120;
+        mesh.position.z = -400;
         mesh.rotation.x = -0.5;
         mesh.rotation.y = 2.8;
         // mesh.rotation.z = Math.random()*2*Math.PI;
@@ -113,17 +113,17 @@ window.onload = function() {
     }
   }
 
-  // function rotateMesh() {
-  //   if (!mesh) {
-  //     return;
-  //   }
-  //
-  //   for(let i = 0; i<scene.children.length; i++) {
-  //     scene.children[i].rotation.x -= SPEED*2;
-  //     scene.children[i].rotation.y -= SPEED;
-  //     scene.children[i].rotation.z -= SPEED*3;
-  //   }
-  // }
+  function rotateMesh() {
+    if (!mesh) {
+      return;
+    }
+
+    for(let i = 0; i<scene.children.length; i++) {
+      scene.children[i].rotation.x -= SPEED*0.5;
+      scene.children[i].rotation.y -= SPEED;
+      scene.children[i].rotation.z -= SPEED*2;
+    }
+  }
 
   function onMouseDown() {
     isDragging = true;
@@ -216,6 +216,7 @@ window.onload = function() {
     for (i = 0; i<parts.length; i++) {
       scene.children[i].name = parts[i].name;
     }
+    console.log(parts.length);
 
     if (intersects.length > 0) {
       //Initiate drag controls.
@@ -244,10 +245,6 @@ window.onload = function() {
     renderer.render(scene,camera);
     // controls.update();
     // rotateMesh();
-    // if (!isDragging) {
-    //   spinMesh();
-    // }
-
   }
 
   function animate() {
@@ -265,4 +262,20 @@ window.onload = function() {
 
   init();
   animate();
+
+//Request for data.
+// $.getJSON("https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=3&generator=search&origin=*&gsrsearch=" + 'doggy', function(data){
+//   $.each(data.query.pages, function (i) {
+//     $('#description').append("<p><a href='https://en.wikipedia.org/?curid=" + data.query.pages[i].pageid +"' target='_blank'>" + data.query.pages[i].title + "</a></p>");
+//     console.log(data.query.pages[i].title);
+//   });
+// })
+
+$.getJSON("https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json&origin=*", function(data){
+  $.each(data.query.pages, function (i) {
+    console.log(data.query.pages[i].revisions[0].*);
+  });
+
+})
+
 }
