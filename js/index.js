@@ -228,14 +228,6 @@ window.onload = function() {
         name.innerHTML = intersects[0].object.name;
         console.log(intersects[0].object.name);
 
-        for (i = 0; i<parts.length; i++) {
-          if (parts[i].name === name.innerHTML) {
-            description.innerHTML = parts[i].description;
-            detail.innerHTML = parts[i].detail;
-            source.innerHTML = parts[i].source;
-          }
-        }
-
         INTERSECTED.material.materials[0].emissive.setRGB(0.1,0.1,0.1);
       }
     }
@@ -263,19 +255,12 @@ window.onload = function() {
   init();
   animate();
 
-//Request for data.
-// $.getJSON("https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=3&generator=search&origin=*&gsrsearch=" + 'doggy', function(data){
-//   $.each(data.query.pages, function (i) {
-//     $('#description').append("<p><a href='https://en.wikipedia.org/?curid=" + data.query.pages[i].pageid +"' target='_blank'>" + data.query.pages[i].title + "</a></p>");
-//     console.log(data.query.pages[i].title);
-//   });
-// })
-
-$.getJSON("https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json&origin=*", function(data){
+// Request for data.
+$.getJSON("https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=3&generator=search&origin=*&gsrsearch=" + 'doggy', function(data){
   $.each(data.query.pages, function (i) {
-    console.log(data.query.pages[i].revisions[0].*);
+    $('#description').append("<p><a href='https://en.wikipedia.org/?curid=" + data.query.pages[i].pageid +"' target='_blank'>" + data.query.pages[i].title + "</a></p>");
+    console.log(data.query.pages[i]);
   });
-
 })
 
 }
