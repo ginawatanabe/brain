@@ -255,12 +255,4 @@ window.onload = function() {
   init();
   animate();
 
-// Request for data.
-$.getJSON("https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=3&generator=search&origin=*&gsrsearch=" + 'doggy', function(data){
-  $.each(data.query.pages, function (i) {
-    $('#description').append("<p><a href='https://en.wikipedia.org/?curid=" + data.query.pages[i].pageid +"' target='_blank'>" + data.query.pages[i].title + "</a></p>");
-    console.log(data.query.pages[i]);
-  });
-})
-
 }
