@@ -466,36 +466,65 @@ rhsuperiorfrontal, rhsuperiortemporal, rhsupramarginal, rhtransversetemporal, rh
 const fs = require('fs');
 const request = require('request');
 let output;
+let limit = 10;
 let counter = 0;
+let DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
 
-console.log("hello");
-for (i=0; i<parts.length; i++) {
-  let generatedurls = "https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=10&generator=search&origin=*&gsrsearch=" + parts[i].name;
-  request(generatedurls, function(err, response,data) {
-    if(!err) {
-      let value = JSON.parse(data);
-      // console.log(value.query.pages);
-      for (let pageid in value.query.pages) {
-        console.log(pageid);
-        let url = "https://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&pageid=" + pageid + "&origin=*";
-        request(url, function(err,response,data){
-          if(!err) {
-            let value = JSON.parse(data);
-            output = value.parse.text["*"];
-            fs.writeFile("./library/wikipedia/" + counter + ".html", output, 'utf8', function(err){
-              if (err) {
-                return console.log(err);
-              }
-              console.log("File has been saved!");
-              counter++;
-            })
-          }
-          return console.log(err);
-        })
-      }
-    } else {
-      console.log(err);
-      console.log("nope");
-    }
-  })
-}
+let discovery = new DiscoveryV1({
+  username: 'ae17d039-a711-43e9-aba6-889da04d4594',
+  password: '5xPJ106BCCEK',
+  version: 'v1',
+  version_date: '2017-08-01'
+});
+
+// https://gateway.watsonplatform.net/discovery/api/v1/environments/50bbbb7d-473c-4e3f-acff-f3283209d47c/collections/dcf9f8a3-89bd-49cc-9b81-d384d1d7a211/query?version=2017-08-01&count=&offset=&aggregation=nested%28enriched_text.entities%29.filter%28enriched_text.entities.type%3A%3APerson%29.term%28enriched_text.entities.text%29&filter=enriched_text.categories.label%3A%2Fhealth%20and%20fitness%2Fdisease&passages=&highlight=true&return=&query=
+
+discovery.query({
+  "environment_id": '50bbbb7d-473c-4e3f-acff-f3283209d47c',
+  "collection_id": 'dcf9f8a3-89bd-49cc-9b81-d384d1d7a211',
+  "query_string": 'text:Cerebrum'},
+  function(error, data) {
+    console.log(JSON.stringify(data, null, 2));
+    console.log('test');
+  });
+
+console.log('hello');
+
+// console.log(counter);
+// for (let i=0; i<parts.length; i++) {
+//
+//   let generatedurls = "https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=" + limit + "&generator=search&origin=*&gsrsearch=" + parts[i].name;
+//
+//   request(generatedurls, function(err, response,data) {
+//     if(!err) {
+//       let value1 = JSON.parse(data);
+//       for (let pageid in value1.query.pages) {
+//         let url = "https://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&pageid=" + pageid + "&origin=*";
+//
+//
+//         request(url, function(err,response,data){
+//           if(!err) {
+//             let value2 = JSON.parse(data);
+//             output = value2.parse.text["*"];
+//             console.log(i);
+//             fs.writeFile("./library/wikipedia/" + parts[i].name + counter + ".html", output, 'utf8', function(err){
+//               if (err) {
+//                 return console.log(err);
+//               }
+//               console.log("File has been saved!");
+//               if (counter < limit) {
+//                 counter++;
+//               } else {
+//                 counter = 0;
+//               }
+//             })
+//           }
+//           return console.log(err);
+//         })
+//       }
+//     } else {
+//       console.log(err);
+//       console.log("nope");
+//     }
+//   })
+// }
