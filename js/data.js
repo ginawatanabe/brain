@@ -1,450 +1,258 @@
 
 let lhcaudalanteriorcingulate = {
-  name: 'Caudal Anterior Cingulate',
-  description: 'Connections to both "emotional" limbic system and "cognitive" prefrontal cortex.',
-  detail: 'The Caudal Anterior Cingulate, or anterior cingulate cortex (ACC) ',
-  source: 'something'
+  name: 'Caudal Anterior Cingulate'
 }
 
 let lhcaudalmiddlefrontal = {
-  name: 'Caudal Middle Frontal',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Caudal Middle Frontal'
 }
 
 let lhcuneus = {
-  name: 'Cuneus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Cuneus'
 }
 
 let lhentorhinal = {
-  name: 'Entorhinal',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Entorhinal'
 }
 
 let lhfusiform = {
-  name: 'Fusiform',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Fusiform'
 }
 
 let lhinferiorparietal = {
-  name: 'Inferior Parietal Lobule',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Inferior Parietal Lobule'
 }
 
 let lhinferiortemporal = {
-  name: 'Inferior Temporal Lobule',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Inferior Temporal Lobule'
 }
 
 let lhinsula = {
-  name: 'Insula',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Insula'
 }
 
 let lhisthmuscingulate = {
-  name: 'Isthmus Cingulate',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Isthmus Cingulate'
 }
 
 let lhlateraloccipital = {
-  name: 'Lateral Occipital Complex',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Lateral Occipital Complex'
 }
 
 let lhlateralorbitofrontal = {
-  name: 'Lateral Orbito Frontal Cortex',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Lateral Orbito Frontal Cortex'
 }
 
 let lhlingual = {
-  name: 'Lingual Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Lingual Gyrus'
 }
 
 let lhmedialorbitofrontal = {
-  name: 'Medial Orbito Frontal Cortex',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Medial Orbito Frontal Cortex'
 }
 
 let lhmiddletemporal = {
-  name: 'Middle Temporal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Middle Temporal Gyrus'
 }
 
 let lhparacentral = {
-  name: 'Paracentral Lobule',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Paracentral Lobule'
 }
 
 let lhparahippocampal = {
-  name: 'Parahippocampal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Parahippocampal Gyrus'
 }
 
 let lhparsopercularis = {
-  name: 'Pars Opercularis',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Pars Opercularis'
 }
 
 let lhparsorbitalis = {
-  name: 'Pars Orbitalis',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Pars Orbitalis'
 }
 
 let lhparstriangularis = {
-  name: 'Pars Triangularis',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Pars Triangularis'
 }
 
 let lhpericalcarine = {
-  name: 'Pericalcarine',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Pericalcarine'
 }
 
 let lhpostcentral = {
-  name: 'Post Central Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Post Central Gyrus'
 }
 
 let lhposteriorcingulate = {
-  name: 'Posterior Cingulate',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Posterior Cingulate'
 }
 
 let lhprecentral = {
-  name: 'Precentral Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Precentral Gyrus'
 }
 
 let lhprecuneus = {
-  name: 'Precuneus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Precuneus'
 }
 
 let lhrostralanteriorcingulate = {
-  name: 'Rostral Anterior Cingulate',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Rostral Anterior Cingulate'
 }
 
 let lhrostralmiddlefrontal = {
-  name: 'Rostral Middle Frontal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Rostral Middle Frontal Gyrus'
 }
 
 let lhsuperiorfrontal = {
-  name: 'Superior Frontal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Superior Frontal Gyrus'
 }
 
 let lhsuperiorparietal = {
-  name: 'Superior Parietal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Superior Parietal Gyrus'
 }
 
 let lhsuperiortemporal = {
-  name: 'Superior Temporal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Superior Temporal Gyrus'
 }
 
 let lhsupramarginal = {
-  name: 'Supramarginal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Supramarginal Gyrus'
 }
 
 let lhtransversetemporal = {
-  name: 'Transverse Temporal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Transverse Temporal Gyrus'
 }
 
 let lhunknown = {
-  name: 'Unknown',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Unknown'
 }
 
 let rhcaudalanteriorcingulate = {
-  name: 'Caudal Anterior Cingulate',
-  description: 'Connections to both "emotional" limbic system and "cognitive" prefrontal cortex.',
-  detail: 'The Caudal Anterior Cingulate, or anterior cingulate cortex (ACC) ',
-  source: 'something'
+  name: 'Caudal Anterior Cingulate'
 }
 
 let rhcaudalmiddlefrontal = {
-  name: 'Caudal Middle Frontal',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Caudal Middle Frontal'
 }
 
 let rhcuneus = {
-  name: 'Cuneus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Cuneus'
 }
 
 let rhentorhinal = {
-  name: 'Entorhinal',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Entorhinal'
 }
 
 let rhfusiform = {
-  name: 'Fusiform',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Fusiform'
 }
 
 let rhinferiorparietal = {
-  name: 'Inferior Parietal Lobule',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Inferior Parietal Lobule'
 }
 
 let rhinferiortemporal = {
-  name: 'Inferior Temporal Lobule',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Inferior Temporal Lobule'
 }
 
 let rhinsula = {
-  name: 'Insula',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Insula'
 }
 
 let rhisthmuscingulate = {
-  name: 'Isthmus Cingulate',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Isthmus Cingulate'
 }
 
 let rhlateraloccipital = {
-  name: 'Lateral Occipital Complex',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Lateral Occipital Complex'
 }
 
 let rhlateralorbitofrontal = {
-  name: 'Lateral Orbito Frontal Cortex',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Lateral Orbito Frontal Cortex'
 }
 
 let rhlingual = {
-  name: 'Lingual Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Lingual Gyrus'
 }
 
 let rhmedialorbitofrontal = {
-  name: 'Medial Orbito Frontal Cortex',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Medial Orbito Frontal Cortex'
 }
 
 let rhmiddletemporal = {
-  name: 'Middle Temporal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Middle Temporal Gyrus'
 }
 
 let rhparacentral = {
-  name: 'Paracentral Lobule',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Paracentral Lobule'
 }
 
 let rhparahippocampal = {
-  name: 'Parahippocampal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Parahippocampal Gyrus'
 }
 
 let rhparsopercularis = {
-  name: 'Pars Opercularis',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Pars Opercularis'
 }
 
 let rhparsorbitalis = {
-  name: 'Pars Orbitalis',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Pars Orbitalis'
 }
 
 let rhparstriangularis = {
-  name: 'Pars Triangularis',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Pars Triangularis'
 }
 
 let rhpericalcarine = {
-  name: 'Pericalcarine',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Pericalcarine'
 }
 
 let rhpostcentral = {
-  name: 'Post Central Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Post Central Gyrus'
 }
 
 let rhposteriorcingulate = {
-  name: 'Posterior Cingulate',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Posterior Cingulate'
 }
 
 let rhprecentral = {
-  name: 'Precentral Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Precentral Gyrus'
 }
 
 let rhprecuneus = {
-  name: 'Precuneus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Precuneus'
 }
 
 let rhrostralanteriorcingulate = {
-  name: 'Rostral Anterior Cingulate',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Rostral Anterior Cingulate'
 }
 
 let rhrostralmiddlefrontal = {
-  name: 'Rostral Middle Frontal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Rostral Middle Frontal Gyrus'
 }
 
 let rhsuperiorfrontal = {
-  name: 'Superior Frontal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Superior Frontal Gyrus'
 }
 
 let rhsuperiorparietal = {
-  name: 'Superior Parietal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Superior Parietal Gyrus'
 }
 
 let rhsuperiortemporal = {
-  name: 'Superior Temporal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Superior Temporal Gyrus'
 }
 
 let rhsupramarginal = {
-  name: 'Supramarginal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Supramarginal Gyrus'
 }
 
 let rhtransversetemporal = {
-  name: 'Transverse Temporal Gyrus',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Transverse Temporal Gyrus'
 }
 
 let rhunknown = {
-  name: 'Unknown',
-  description: 'something',
-  detail: 'something',
-  source: 'something'
+  name: 'Unknown'
 }
 
 //Missing 2 items
@@ -459,72 +267,58 @@ lhrostralmiddlefrontal, lhsuperiorfrontal, lhsuperiorparietal, lhsuperiortempora
 lhtransversetemporal, lhunknown, rhcaudalanteriorcingulate, rhcaudalmiddlefrontal, rhcuneus,
 rhentorhinal, rhfusiform, rhinferiorparietal, rhinferiortemporal, rhinsula, rhisthmuscingulate,
 rhlateraloccipital, rhlateralorbitofrontal, rhlingual, rhmedialorbitofrontal, rhmiddletemporal,
-rhparacentral, rhparahippocampal, rhparsorbitalis, rhparstriangularis, rhpericalcarine, rhpostcentral,
+rhparacentral, rhparahippocampal, rhparsopercularis, rhparsorbitalis, rhparstriangularis, rhpericalcarine, rhpostcentral,
 rhposteriorcingulate, rhprecentral, rhprecuneus, rhrostralanteriorcingulate, rhrostralmiddlefrontal,
-rhsuperiorfrontal, rhsuperiortemporal, rhsupramarginal, rhtransversetemporal, rhunknown];
+rhsuperiorfrontal, rhsuperiorparietal, rhsuperiortemporal, rhsupramarginal, rhtransversetemporal, rhunknown];
 
-const fs = require('fs');
-const request = require('request');
-let output;
-let limit = 10;
-let counter = 0;
-let DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
+let fact1 = {
+  fact: "The brain is 73% water.",
+  source: "https://water.usgs.gov/edu/propertyyou.html"
+}
 
-let discovery = new DiscoveryV1({
-  username: 'ae17d039-a711-43e9-aba6-889da04d4594',
-  password: '5xPJ106BCCEK',
-  version: 'v1',
-  version_date: '2017-08-01'
-});
+let fact2 = {
+  fact: "We have anywhere from 25,000 to 50,000 thoughts a day.",
+  source: "https://www.psychologytoday.com/articles/200107/depression-doing-the-thinking"
+}
 
-// https://gateway.watsonplatform.net/discovery/api/v1/environments/50bbbb7d-473c-4e3f-acff-f3283209d47c/collections/dcf9f8a3-89bd-49cc-9b81-d384d1d7a211/query?version=2017-08-01&count=&offset=&aggregation=nested%28enriched_text.entities%29.filter%28enriched_text.entities.type%3A%3APerson%29.term%28enriched_text.entities.text%29&filter=enriched_text.categories.label%3A%2Fhealth%20and%20fitness%2Fdisease&passages=&highlight=true&return=&query=
+let fact3 = {
+  fact: "The average attention span in 2015 was 8 seconds.",
+  source: "http://www.statisticbrain.com/attention-span-statistics/"
+}
 
-discovery.query({
-  "environment_id": '50bbbb7d-473c-4e3f-acff-f3283209d47c',
-  "collection_id": 'dcf9f8a3-89bd-49cc-9b81-d384d1d7a211',
-  "query_string": 'text:Cerebrum'},
-  function(error, data) {
-    console.log(JSON.stringify(data, null, 2));
-    console.log('test');
-  });
+let fact4 = {
+  fact: "The brain's memory storage capacity is close to around 2.5 petabytes",
+  source: "https://www.scientificamerican.com/article/what-is-the-memory-capacity/"
+}
 
-console.log('hello');
+let fact5 = {
+  fact: "By the age of 2, the brain is 80% of adult size.",
+  source: "https://faculty.washington.edu/chudler/dev.html"
+}
 
-// console.log(counter);
-// for (let i=0; i<parts.length; i++) {
-//
-//   let generatedurls = "https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=" + limit + "&generator=search&origin=*&gsrsearch=" + parts[i].name;
-//
-//   request(generatedurls, function(err, response,data) {
-//     if(!err) {
-//       let value1 = JSON.parse(data);
-//       for (let pageid in value1.query.pages) {
-//         let url = "https://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&pageid=" + pageid + "&origin=*";
-//
-//
-//         request(url, function(err,response,data){
-//           if(!err) {
-//             let value2 = JSON.parse(data);
-//             output = value2.parse.text["*"];
-//             console.log(i);
-//             fs.writeFile("./library/wikipedia/" + parts[i].name + counter + ".html", output, 'utf8', function(err){
-//               if (err) {
-//                 return console.log(err);
-//               }
-//               console.log("File has been saved!");
-//               if (counter < limit) {
-//                 counter++;
-//               } else {
-//                 counter = 0;
-//               }
-//             })
-//           }
-//           return console.log(err);
-//         })
-//       }
-//     } else {
-//       console.log(err);
-//       console.log("nope");
-//     }
-//   })
-// }
+let fact6 = {
+  fact: "The brain makes up about 2% of a human's body weight.",
+  source: "https://www.livescience.com/29365-human-brain.html"
+}
+
+let fact7 = {
+  fact: "The brain contains about 86 billion neurons.",
+  source: "https://www.livescience.com/29365-human-brain.html"
+}
+
+let fact8 = {
+  fact: "The brain weight about 3.3 lbs (1.5 kg)",
+  source: "https://www.livescience.com/29365-human-brain.html"
+}
+
+let fact9 = {
+  fact: "The brain uses 20% of oxygen breathed.",
+  source: "https://www.brainhq.com/brain-resources/brain-facts-myths/brain-facts"
+}
+
+let fact10 = {
+  fact: "Approximately 20% of the blood from the heart is pumped to the brain.",
+  source: "https://www.brainhq.com/brain-resources/brain-facts-myths/brain-facts"
+}
+
+let brainfacts = [fact1, fact2, fact3, fact4, fact5, fact6, fact7, fact8, fact9, fact10];

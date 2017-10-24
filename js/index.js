@@ -1,19 +1,31 @@
-
 window.onload = function() {
   let name = document.getElementById('name');
   let description = document.getElementById('description');
   let detail = document.getElementById('detail');
   let source = document.getElementById('source');
 
+  let overlay = document.getElementById('overlay-wrap');
+
   let container, scene, camera, renderer, controls;
 
-  let objects = [];
+  let targetRotationX = 0;
+  let targetRotationOnMouseDownX = 0;
 
-  let memoryX = [];
-  let memoryY = [];
-  let dragMemory = [];
+  let targetRotationY = 0;
+  let targetRotationOnMouseDownY = 0;
 
-  let acceleration = 0.08;
+  let mouseX = 0;
+  let mouseXOnMouseDown = 0;
+
+  let mouseY = 0;
+  let mouseYOnMouseDown = 0;
+
+  let windowHalfX = window.innerWidth/2;
+  let windowHalfY = window.innerHeight/2;
+
+  let group;
+
+  let currentMeshName;
 
   let WIDTH  = window.innerWidth;
   let HEIGHT = window.innerHeight;
@@ -35,40 +47,53 @@ window.onload = function() {
   });
   gui.open();
 
+  group = new THREE.Group();
+
+  //Loading Screen
+
+  overlay.onclick = function() {
+    console.log("hey")
+    overlay.style.display = "none";
+    console.log('clicked on overlay');
+
+    var position = {x : -40, y : -40, z : -600, rx : -0.5, ry : -2.5};
+    var target = { x : -50, y: -50, z : -180, rx : 0, ry : 0};
+    var tween = new TWEEN.Tween(position).to(target, 5700);
+    tween.easing(TWEEN.Easing.Exponential.Out);
+
+    tween.start();
+    tween.onUpdate(function(){
+      group.position.x = position.x;
+      group.position.y = position.y;
+      group.position.z = position.z;
+      group.rotation.x = position.rx;
+      group.rotation.y = position.ry;
+      // group.rotation.y = position.ry;
+    })
+    // group.rotation.x = -0.5;
+    // group.rotation.y = -1.2;
+  }
+
   function init() {
     container = document.createElement('div');
     document.body.appendChild(container);
 
     scene = new THREE.Scene();
+    scene.add(group);
+
+    group.position.x = -50;
+    group.position.y = -50;
+    group.position.z = -250;
+
+    // group.rotation.x = -0.5;
+    // group.rotation.y = 0.5;
 
     initCamera();
     initRenderer();
     initMesh();
     initLight();
 
-    //Initialize trackball controls.
-    // controls = new THREE.TrackballControls(camera);
-    // controls.rotateSpeed = 1.0;
-    // controls.zoomSpeed = 1.2;
-    // controls.panSpeed = 0.8;
-    // controls.noZoom = false;
-    // controls.noPan = false;
-    // controls.staticMoving = true;
-    // controls.dynamicDampingFactor = 0.3;
-    // controls.maxPolarAngle = Math.Pi/2;
-    // //
     container.appendChild(renderer.domElement);
-    // //
-    // let dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
-    // dragControls.addEventListener( 'dragstart', function ( event ) { controls.enabled = false; } );
-    // dragControls.addEventListener( 'dragend', function ( event ) { controls.enabled = true; } );
-
-  }
-
-  function onResize() {
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   function initCamera() {
@@ -98,159 +123,123 @@ window.onload = function() {
     let loader = new THREE.JSONLoader();
     for (i=0; i<64; i++) {
       let name = 'models/brain/part' + String(i) + '.json';
+      let meshName = parts[i].name;
       loader.load(name, function(geometry, materials) {
         mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-        mesh.position.x = -50;
-        mesh.position.y = -50;
-        // mesh.position.z = -120;
-        mesh.position.z = -400;
-        mesh.rotation.x = -0.5;
-        mesh.rotation.y = 2.8;
-        // mesh.rotation.z = Math.random()*2*Math.PI;
-        scene.add(mesh);
-        objects.push(mesh);
+        mesh.rotation.y= -10;
+        mesh.name = meshName;
+        group.add(mesh);
       })
     }
   }
 
-  function rotateMesh() {
-    if (!mesh) {
-      return;
-    }
-
-    for(let i = 0; i<scene.children.length; i++) {
-      scene.children[i].rotation.x -= SPEED*0.5;
-      scene.children[i].rotation.y -= SPEED;
-      scene.children[i].rotation.z -= SPEED*2;
-    }
+  function onResize() {
+    windowHalfX = window.innerWidth/2;
+    windowHalfY = window.innerHeight/2;
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   function onMouseDown() {
-    isDragging = true;
+    event.preventDefault();
+    document.addEventListener('mousemove', onMouseMove, false);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mouseout', onMouseOut, false);
+
+    mouseXOnMouseDown = event.clientX - windowHalfX;
+    targetRotationOnMouseDownX = targetRotationX;
+
+    mouseYOnMouseDown = event.clientY - windowHalfY;
+    targetRotationOnMouseDownY = targetRotationY;
   }
 
   function onMouseUp(event) {
-    isDragging = false;
+    document.removeEventListener('mousemove', onMouseMove, false);
+    document.removeEventListener('mouseup', onMouseUp, false);
+    document.removeEventListener('mouseout', onMouseOut, false);
   }
 
-  // function spinMesh() {
-  //   speed = 0.4;
-  //   console.log(speed);
-  //
-  //   if (speed < 0) {
-  //     console.log('STOPPPPP');
-  //     console.log(speed);
-  //
-  //     speed = 0;
-  //   } else if (speed > 0) {
-  //     console.log('hello');
-  //     speed = speed - 0.01;
-  //     console.log(speed);
-  //
-  //   }
-  //   if (memory[0] > memory[1]) {
-  //     for(let i = 0; i<scene.children.length; i++) {
-  //       scene.children[i].rotation.y += SPEED*speed;
-  //     }
-  //   }
-  //   if (memory[0] < memory[1]) {
-  //     for(let i = 0; i<scene.children.length; i++) {
-  //       scene.children[i].rotation.y -= SPEED*speed;
-  //     }
-  //   }
-  //
-  //   return speed;
-  // }
+  function onMouseOut(event) {
+    document.removeEventListener('mousemove', onMouseMove, false);
+    document.removeEventListener('mouseup', onMouseUp, false);
+    document.removeEventListener('mouseout', onMouseOut, false);
+  }
 
+  function onTouchStart(event) {
+    if (event.touches.length == 1) {
+      event.preventDefault();
+      mouseXOnMouseDown = event.touches[0].pageX - windowHalfX;
+      targetRotationOnMouseDownX = targetRotationX;
+      mouseYOnMouseDown = event.touches[0].pageY - windowHalfY;
+      targetRotationOnMouseDownY = targetRotationY;
+    }
+  }
+
+  function onTouchMove(event) {
+    if (event.touches.length == 1) {
+      event.preventDefault();
+      mouseX = event.touches[0].pageX - windowHalfX;
+      targetRotationX = targetRotationOnMouseDownX + (mouseX - mouseXOnMouseDown) * 0.05;
+      mouseY = event.touches[0].pageY - windowHalfY;
+      targetRotationY = targetRotationOnMouseDownY + (mouseY = mouseYOnMouseDown) * 0.05;
+    }
+  }
 
   function onMouseMove(event) {
-
-    mouse.x = (event.clientX/window.innerWidth)*2 - 1;
-    mouse.y = -(event.clientY/window.innerHeight)*2 + 1;
-
-    //Drag controls for object.
-    if (isDragging) {
-      memoryX.unshift(mouse.x);
-      if (memoryX.length > 1) {
-        memoryX.length = 2;
-      }
-
-      memoryY.unshift(mouse.y);
-      if (memoryY.length > 1) {
-        memoryY.length = 2;
-      }
-
-      // console.log("this is current: " + event.clientX + "this is initial: " + initial)
-      if (memoryX[0] > memoryX[1]) {
-        for (i = 0; i<scene.children.length; i++) {
-          scene.children[i].rotation.y += acceleration;
-        }
-      }
-
-      if (memoryX[0] < memoryX[1]) {
-        for (i=0; i<scene.children.length; i++) {
-          scene.children[i].rotation.y -= acceleration;
-        }
-      }
-
-      if (memoryY[0] > memoryY[1]) {
-        for (i = 0; i<scene.children.length; i++) {
-          scene.children[i].rotation.x -= acceleration;
-        }
-      }
-
-      if (memoryY[0] < memoryY[1]) {
-        for (i=0; i<scene.children.length; i++) {
-          scene.children[i].rotation.x += acceleration;
-        }
-      }
+    console.log('mouse is moving');
+    mouseX = event.clientX - windowHalfX;
+    mouseY = event.clientY - windowHalfY;
+    targetRotationX = targetRotationOnMouseDownX + ( mouseX - mouseXOnMouseDown) * 0.02;
+    targetRotationY = targetRotationOnMouseDownY + ( mouseY - mouseYOnMouseDown) * 0.02;
     }
 
+  function onDocumentMouseMove(event) {
+    mouse.x = (event.clientX/window.innerWidth)*2 - 1;
+    mouse.y = -(event.clientY/window.innerHeight)*2 + 1;
     // Raycaster
     // Update the picking ray with the camera and mouse position.
     raycaster.setFromCamera(mouse, camera);
     // Calculate objects intersecting the picking ray
-    let intersects = raycaster.intersectObjects(scene.children);
-
-    // Placeholder name assignments.
-    for (i = 0; i<parts.length; i++) {
-      scene.children[i].name = parts[i].name;
-    }
-    console.log(parts.length);
+    let intersects = raycaster.intersectObjects(scene.children[0].children);
 
     if (intersects.length > 0) {
-      //Initiate drag controls.
+
       if (intersects[0].object != INTERSECTED) {
         if (INTERSECTED)
           INTERSECTED.material.materials[0].emissive.setRGB(0,0,0);
 
         INTERSECTED = intersects[0].object;
         name.innerHTML = intersects[0].object.name;
-        console.log(intersects[0].object.name);
+        currentMeshName = intersects[0].object.name;
 
         INTERSECTED.material.materials[0].emissive.setRGB(0.1,0.1,0.1);
-      }
+        }
     }
   }
 
   function render() {
+    group.rotation.y += (targetRotationX - group.rotation.y) * 0.05;
+    group.rotation.x += (targetRotationY - group.rotation.x) * 0.05;
+
     renderer.render(scene,camera);
-    // controls.update();
-    // rotateMesh();
+    TWEEN.update();
   }
 
   function animate() {
     requestAnimationFrame(animate);
     render();
   }
-  window.addEventListener('mousemove',onMouseMove,false);
-  //Window resize event listener.
+
   window.addEventListener('resize',onResize,false);
 
   window.addEventListener('mousedown', onMouseDown, false);
 
-  window.addEventListener('mouseup', onMouseUp, false);
+  window.addEventListener('touchmove', onTouchMove, false);
 
+  window.addEventListener('touchstart',onTouchStart,false);
+
+  window.addEventListener('mousemove', onDocumentMouseMove, false);
 
   init();
   animate();
