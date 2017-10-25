@@ -1,16 +1,16 @@
-@keyframes spinner {
+@keyframes colorChange {
   from {
-    background-color: blue;
+    background-color: white;
   }
   to {
-    background-color: red;
+    background-color: rgb(239,100,100);
   }
 }
 
-html, body, p, ul, h1, h2, h3, h4, h5 {
+html, body, p, ul, h1 {
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 nav {
@@ -36,7 +36,7 @@ ul {
 
 .information {
   height: 400px;
-  width: 400px;
+  width: 300px;
   /*background-color: blue;*/
   position: absolute;
   right: 10%;
@@ -52,8 +52,9 @@ ul {
 }
 
 #name {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bolder;
+  letter-spacing: 2px;
 }
 
 #sound {
@@ -70,7 +71,7 @@ ul {
   height: auto;
   width: auto;
   /*background-color: yellow;*/
-  font-size: 28px;
+  font-size: 13px;
   margin-top: 10px;
 }
 
@@ -111,15 +112,29 @@ ul {
 }
 
 #loader {
-  height: 200px;
-  width: 200px;
+  height: auto;
+  width: 70px;
   z-index: 2;
-  background-color: blue;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.spinner {
-  animation-name: spinner;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease;
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 200px;
+}
+
+#dot1 {
+  animation: colorChange 2s ease-in;
+}
+
+#dot2 {
+  animation: colorChange 2s ease-in 2s;
+}
+
+#dot3 {
+  animation: colorChange 2s ease-in 4s;
 }

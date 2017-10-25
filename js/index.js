@@ -1,12 +1,18 @@
 window.onload = function() {
+  var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart;
+  console.log('Page load time is '+ loadTime);
+
   let name = document.getElementById('name');
   let description = document.getElementById('description');
   let detail = document.getElementById('detail');
   let source = document.getElementById('source');
-
   let overlay = document.getElementById('overlay-wrap');
 
-  let container, scene, camera, renderer, controls;
+  let container, scene, camera, renderer, light, controls;
+  let lightIntensity = 1.4;
+
+  let group;
+  let currentMeshName;
 
   let targetRotationX = 0;
   let targetRotationOnMouseDownX = 0;
@@ -23,27 +29,23 @@ window.onload = function() {
   let windowHalfX = window.innerWidth/2;
   let windowHalfY = window.innerHeight/2;
 
-  let group;
-
-  let currentMeshName;
-
   let WIDTH  = window.innerWidth;
   let HEIGHT = window.innerHeight;
-
   let SPEED = 0.01;
 
   let raycaster = new THREE.Raycaster();
-  let mouse = new THREE.Vector2(), INTERSECTED;
+  let mouse = new THREE.Vector2(), INTERSECTED, CLICKINTERSECTED;
+  let intersects;
 
-  let isDragging = false;
+  let loading = setTimeout(go, loadTime+5500);
 
+  // Setting up GUI.
   let params = {
-    acceleration: 0.08
+    lightIntensity: 1.4
   }
-
   let gui = new dat.GUI();
-  gui.add(params, 'acceleration', 0, 0.15).step(0.01).onChange(function(value) {
-    acceleration = value;
+  gui.add(params, 'lightIntensity', 0, 2).step(0.01).onChange(function(value) {
+    light.intensity = value;
   });
   gui.open();
 
@@ -51,13 +53,11 @@ window.onload = function() {
 
   //Loading Screen
 
-  overlay.onclick = function() {
-    console.log("hey")
+  function go() {
     overlay.style.display = "none";
-    console.log('clicked on overlay');
-
+    //Tween entrance animation.
     var position = {x : -40, y : -40, z : -600, rx : -0.5, ry : -2.5};
-    var target = { x : -50, y: -50, z : -180, rx : 0, ry : 0};
+    var target = { x : -50, y: -50, z : -200, rx : 0, ry : 0};
     var tween = new TWEEN.Tween(position).to(target, 5700);
     tween.easing(TWEEN.Easing.Exponential.Out);
 
@@ -68,10 +68,7 @@ window.onload = function() {
       group.position.z = position.z;
       group.rotation.x = position.rx;
       group.rotation.y = position.ry;
-      // group.rotation.y = position.ry;
     })
-    // group.rotation.x = -0.5;
-    // group.rotation.y = -1.2;
   }
 
   function init() {
@@ -80,13 +77,6 @@ window.onload = function() {
 
     scene = new THREE.Scene();
     scene.add(group);
-
-    group.position.x = -50;
-    group.position.y = -50;
-    group.position.z = -250;
-
-    // group.rotation.x = -0.5;
-    // group.rotation.y = 0.5;
 
     initCamera();
     initRenderer();
@@ -111,8 +101,9 @@ window.onload = function() {
   }
 
   function initLight() {
-    let light = new THREE.PointLight(0xffffff);
+    light = new THREE.PointLight(0xffffff, lightIntensity);
     light.position.set(50,50,50);
+    // light.castShadow = false;
     scene.add(light);
     console.log(scene.children);
   }
@@ -192,7 +183,7 @@ window.onload = function() {
     mouseY = event.clientY - windowHalfY;
     targetRotationX = targetRotationOnMouseDownX + ( mouseX - mouseXOnMouseDown) * 0.02;
     targetRotationY = targetRotationOnMouseDownY + ( mouseY - mouseYOnMouseDown) * 0.02;
-    }
+  }
 
   function onDocumentMouseMove(event) {
     mouse.x = (event.clientX/window.innerWidth)*2 - 1;
@@ -201,27 +192,28 @@ window.onload = function() {
     // Update the picking ray with the camera and mouse position.
     raycaster.setFromCamera(mouse, camera);
     // Calculate objects intersecting the picking ray
-    let intersects = raycaster.intersectObjects(scene.children[0].children);
+    intersects = raycaster.intersectObjects(scene.children[0].children);
 
     if (intersects.length > 0) {
 
       if (intersects[0].object != INTERSECTED) {
-        if (INTERSECTED)
+        if (INTERSECTED) {
           INTERSECTED.material.materials[0].emissive.setRGB(0,0,0);
-
-        INTERSECTED = intersects[0].object;
-        name.innerHTML = intersects[0].object.name;
-        currentMeshName = intersects[0].object.name;
-
-        INTERSECTED.material.materials[0].emissive.setRGB(0.1,0.1,0.1);
         }
+      }
+
+      INTERSECTED = intersects[0].object;
+      name.innerHTML = intersects[0].object.name.toUpperCase();
+      currentMeshName = intersects[0].object.name;
+
+      intersects[0].object.material.materials[0].emissive.setRGB(0.1,0.1,0.1);
+
     }
   }
 
   function render() {
     group.rotation.y += (targetRotationX - group.rotation.y) * 0.05;
     group.rotation.x += (targetRotationY - group.rotation.x) * 0.05;
-
     renderer.render(scene,camera);
     TWEEN.update();
   }
