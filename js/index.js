@@ -63,7 +63,7 @@ window.onload = function() {
     //Tween entrance animation.
     var position = {x : -40, y : -40, z : -600, rx : -0.5, ry : -2.5};
     var target = { x : -50, y: -50, z : -200, rx : 0, ry : 0};
-    var tween = new TWEEN.Tween(position).to(target, 10700);
+    var tween = new TWEEN.Tween(position).to(target, 3700);
     tween.easing(TWEEN.Easing.Exponential.Out);
 
     tween.start();
