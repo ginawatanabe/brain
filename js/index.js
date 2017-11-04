@@ -51,6 +51,11 @@ window.onload = function() {
 
   group = new THREE.Group();
 
+  let mesh = null;
+
+  init();
+  animate();
+
   //Loading Screen
 
   function go() {
@@ -58,7 +63,7 @@ window.onload = function() {
     //Tween entrance animation.
     var position = {x : -40, y : -40, z : -600, rx : -0.5, ry : -2.5};
     var target = { x : -50, y: -50, z : -200, rx : 0, ry : 0};
-    var tween = new TWEEN.Tween(position).to(target, 5700);
+    var tween = new TWEEN.Tween(position).to(target, 10700);
     tween.easing(TWEEN.Easing.Exponential.Out);
 
     tween.start();
@@ -78,39 +83,12 @@ window.onload = function() {
     scene = new THREE.Scene();
     scene.add(group);
 
-    initCamera();
-    initRenderer();
-    initMesh();
-    initLight();
-
-    container.appendChild(renderer.domElement);
-  }
-
-  function initCamera() {
+    // initCamera();
     camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 500);
-    camera.position.set(0, 3.5, 5);
-    camera.position.z = 10;
+    camera.position.set(0, 3.5, 10);
     camera.lookAt(scene.position);
-  }
 
-  function initRenderer() {
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(WIDTH, HEIGHT);
-    renderer.sortObjects = false;
-  }
-
-  function initLight() {
-    light = new THREE.PointLight(0xffffff, lightIntensity);
-    light.position.set(50,50,50);
-    // light.castShadow = false;
-    scene.add(light);
-    console.log(scene.children);
-  }
-
-  let mesh = null;
-
-  function initMesh() {
+    // initMesh();
     let loader = new THREE.JSONLoader();
     for (i=0; i<64; i++) {
       let name = 'models/brain/part' + String(i) + '.json';
@@ -122,7 +100,23 @@ window.onload = function() {
         group.add(mesh);
       })
     }
+
+    // initLight();
+    light = new THREE.PointLight(0xffffff, lightIntensity);
+    light.position.set(50,50,50);
+    // light.castShadow = false;
+    scene.add(light);
+    console.log(scene.children);
+
+    // initRenderer();
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(WIDTH, HEIGHT);
+    renderer.sortObjects = false;
+
+    container.appendChild(renderer.domElement);
   }
+
 
   function onResize() {
     windowHalfX = window.innerWidth/2;
@@ -233,7 +227,5 @@ window.onload = function() {
 
   window.addEventListener('mousemove', onDocumentMouseMove, false);
 
-  init();
-  animate();
 
 }
