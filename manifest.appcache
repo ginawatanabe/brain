@@ -2,8 +2,6 @@ CACHE MANIFEST
 # 2017-12-30:v1
 
 CACHE:
-index.html
-css/styles.css
 models/brain/part0.json
 models/brain/part1.json
 models/brain/part2.json
