@@ -2,6 +2,12 @@ CACHE MANIFEST
 # 2017-12-30:v1
 
 CACHE:
+index.html
+styles.css
+library/dat.gui.min.js
+library/jquery-3.2.1.min.js
+library/three.min.js
+library/tweenjs-0.6.2.min.js 
 models/brain/part0.json
 models/brain/part1.json
 models/brain/part2.json
