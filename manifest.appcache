@@ -4,10 +4,6 @@ CACHE MANIFEST
 CACHE:
 index.html
 css/styles.css
-library/dat.gui.min.js
-library/jquery-3.2.1.min.js
-library/three.min.js
-library/tweenjs-0.6.2.min.js
 js/index.js
 models/brain/part0.json
 models/brain/part1.json
