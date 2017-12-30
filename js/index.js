@@ -289,7 +289,7 @@ var fact3 = {
 }
 
 var fact4 = {
-  fact: "The brain's memory storage capacity is close to around 2.5 petabytes",
+  fact: "The brain's memory storage capacity is close to around 2.5 petabytes.",
   source: "https://www.scientificamerican.com/article/what-is-the-memory-capacity/"
 }
 
@@ -309,7 +309,7 @@ var fact7 = {
 }
 
 var fact8 = {
-  fact: "The brain weighs about 3.3 lbs (1.5 kg)",
+  fact: "The brain weighs about 3.3 lbs (1.5 kg).",
   source: "https://www.livescience.com/29365-human-brain.html"
 }
 

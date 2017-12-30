@@ -17,6 +17,11 @@ body {
   color: rgb(43,43,43);
   flex-wrap: wrap;
 }
+@media screen and (max-width: 600px) {
+  .information {
+    display: none;
+  }
+}
 #title {
   height: auto;
   width: auto;
